@@ -9,22 +9,29 @@ class Player:
         #N = 0, E = 1, S = 2, W = 3
         direction = 0
         speed = 99
+        current = (0,0)
 
         def __init__(self, x, y):
-                self.x = x + 30
-                self.y = y + 30
+                self.current = (x,y)
+                self.x = x*99 + 30
+                self.y = y*99 + 30
 
         def moveRight(self):
                 self.x = self.x + self.speed
+                self.current = (self.current[0] + 1, self.current[1])
 
         def moveLeft(self):
                 self.x = self.x - self.speed
+                self.current = (self.current[0] - 1, self.current[1])
 
         def moveUp(self):
                 self.y = self.y - self.speed
+                self.current = (self.current[0], self.current[1]-1)
 
         def moveDown(self):
                 self.y = self.y + self.speed
+                self.current = (self.current[0], self.current[1] + 1)
+
 
 class GUI:
         windowWidth = 1000
@@ -39,8 +46,9 @@ class GUI:
                 self._player_image = None
                 self._bg = None
                 self.player = Player(startX, startY)
-                self.finishX = finishX + 20
-                self.finishY = finishY + 20
+                self.finish = (finishX, finishY)
+                self.finishX = finishX*99 + 20
+                self.finishY = finishY*99 + 20
                 self._finish_image = None
 
         def on_init(self):
@@ -110,10 +118,17 @@ class GUI:
                                 wait = 1
 
                         if (keys[K_DOWN]):
-                                #TODO "CHECK"
+                                #TODO Victory, not victory!
+
+                                
+                                print self.player.current
+                                print self.finish
+
+                                if self.player.current == self.finish:
+                                        self._running = False
                                 wait = 1
                         if (keys[K_ESCAPE]):
-                                self._running = FALSE
+                                self._running = False
 
                         self.on_loop()
                         self.on_render()
@@ -122,5 +137,5 @@ class GUI:
                 self.on_cleanup()
 
 if __name__ == "__main__" :
-        theApp = GUI(0,0, random.randint(0,9)*99, random.randint(0,9)*99)
+        theApp = GUI(0,0, random.randint(0,9), random.randint(0,9))
         theApp.on_execute()
