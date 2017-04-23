@@ -120,7 +120,7 @@ class GUI:
                         if (keys[K_DOWN]):
                                 #TODO Victory, not victory!
 
-                                
+
                                 print self.player.current
                                 print self.finish
 
@@ -132,8 +132,12 @@ class GUI:
 
                         self.on_loop()
                         self.on_render()
-                        if (wait == 1):
-                                time.sleep(.5)
+                        #if (wait == 1):
+                        #        time.sleep(.3)
+                        while(wait == 1):
+                                for event in pygame.event.get():
+                                        if event.type == pygame.KEYUP:
+                                                wait = 0
                 self.on_cleanup()
 
 if __name__ == "__main__" :
