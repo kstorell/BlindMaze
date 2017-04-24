@@ -264,10 +264,12 @@ class GUI:
                                 #TODO Victory, not victory!
 
 
-                                print self.player.current
-                                print self.finish
+                                #print self.player.current
+                                #print self.finish
 
                                 if self.player.current == self.finish:
+                                        #TODO victory
+                                        print "YOU WIN!"
                                         self._running = False
                                 wait = 1
                         if (keys[K_ESCAPE]):
@@ -276,7 +278,7 @@ class GUI:
                         self.on_loop()
                         self.on_render()
                         if (wait == 1):
-                                time.sleep(.3)
+                                time.sleep(.2)
                         #while(wait == 1):
                         #        for event in pygame.event.get():
                         #                if event.type == pygame.KEYUP:
@@ -284,5 +286,12 @@ class GUI:
                 self.on_cleanup()
 
 if __name__ == "__main__" :
+        repeat = 1
+        while repeat:
+                finishX = random.randint(0,9)
+                finishY = random.randint(0,9)
+                if (finishX,finishY) == (4,4) or (finishX,finishY) == (5,4) or (finishX,finishY) == (4,5) or (finishX,finishY) == (5,5):
+                        repeat = 1
+                else: repeat = 0
         theApp = GUI(0,0, random.randint(0,9), random.randint(0,9))
         theApp.on_execute()
