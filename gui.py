@@ -3,6 +3,126 @@ import pygame
 import time
 import random
 
+class Maze:
+        maze = dict()
+        # maze[i][j] stores the directions you can go in from location (i,j)
+        # maze[i][j] = [N,E,S,W]
+
+        for i in range(10):
+                maze[i] = dict()
+                for j in range(10):
+                        maze[i][j] = [1, 1, 1, 1]
+
+        maze[0][0] = [0, 1, 1, 0]
+        maze[0][1] = [0, 1, 0, 1]
+        maze[0][2] = [0, 0, 1, 1]
+        maze[0][3] = [0, 1, 1, 0]
+        maze[0][4] = [0, 1, 0, 1]
+        maze[0][5] = [0, 1, 0, 1]
+        maze[0][6] = [0, 1, 1, 1]
+        maze[0][7] = [0, 0, 1, 1]
+        maze[0][8] = [0, 1, 1, 0]
+        maze[0][9] = [0, 0, 1, 1]
+
+        maze[1][0] = [1, 0, 1, 0]
+        maze[1][1] = [0, 1, 1, 0]
+        maze[1][2] = [1, 1, 0, 1]
+        maze[1][3] = [1, 0, 1, 1]
+        maze[1][4] = [0, 1, 1, 0]
+        maze[1][5] = [0, 0, 0, 1]
+        maze[1][6] = [1, 0, 1, 0]
+        maze[1][7] = [1, 0, 1, 0]
+        maze[1][8] = [1, 0, 1, 0]
+        maze[1][9] = [1, 0, 1, 0]
+
+        maze[2][0] = [1, 0, 0, 0]
+        maze[2][1] = [1, 0, 1, 0]
+        maze[2][2] = [0, 1, 1, 0]
+        maze[2][3] = [1, 0, 0, 1]
+        maze[2][4] = [1, 1, 0, 0]
+        maze[2][5] = [0, 1, 0, 1]
+        maze[2][6] = [1, 0, 0, 1]
+        maze[2][7] = [1, 1, 0, 0]
+        maze[2][8] = [1, 0, 0, 1]
+        maze[2][9] = [1, 0, 1, 0]
+
+        maze[3][0] = [0, 1, 1, 0]
+        maze[3][1] = [1, 0, 0, 1]
+        maze[3][2] = [1, 0, 1, 0]
+        maze[3][3] = [0, 1, 0, 0]
+        maze[3][4] = [0, 1, 0, 1]
+        maze[3][5] = [0, 1, 0, 1]
+        maze[3][6] = [0, 1, 1, 1]
+        maze[3][7] = [0, 1, 1, 1]
+        maze[3][8] = [0, 1, 0, 1]
+        maze[3][9] = [1, 0, 0, 1]
+
+        maze[4][0] = [1, 1, 0, 0]
+        maze[4][1] = [0, 0, 1, 1]
+        maze[4][2] = [1, 1, 0, 0]
+        maze[4][3] = [0, 0, 1, 1]
+        maze[4][4] = [0, 0, 0, 0]  # tree
+        maze[4][5] = [0, 0, 0, 0]  # tree
+        maze[4][6] = [1, 0, 1, 0]
+        maze[4][7] = [1, 1, 0, 0]
+        maze[4][8] = [0, 1, 0, 1]
+        maze[4][9] = [0, 0, 1, 1]
+
+        maze[5][0] = [0, 1, 1, 0]
+        maze[5][1] = [1, 0, 0, 1]
+        maze[5][2] = [0, 1, 0, 0]
+        maze[5][3] = [1, 0, 1, 1]
+        maze[5][4] = [0, 0, 0, 0]  # tree
+        maze[5][5] = [0, 0, 0, 0]  # tree
+        maze[5][6] = [1, 1, 0, 0]
+        maze[5][7] = [0, 1, 1, 1]
+        maze[5][8] = [0, 0, 0, 1]
+        maze[5][9] = [1, 0, 1, 0]
+
+        maze[6][0] = [1, 0, 0, 0]
+        maze[6][1] = [0, 1, 1, 0]
+        maze[6][2] = [0, 0, 1, 1]
+        maze[6][3] = [1, 1, 0, 0]
+        maze[6][4] = [0, 1, 1, 1]
+        maze[6][5] = [0, 0, 1, 1]
+        maze[6][6] = [0, 1, 1, 0]
+        maze[6][7] = [1, 0, 0, 1]
+        maze[6][8] = [0, 1, 1, 0]
+        maze[6][9] = [1, 0, 1, 1]
+
+        maze[7][0] = [0, 1, 1, 0]
+        maze[7][1] = [1, 0, 0, 1]
+        maze[7][2] = [1, 1, 0, 0]
+        maze[7][3] = [0, 0, 1, 1]
+        maze[7][4] = [1, 0, 1, 0]
+        maze[7][5] = [1, 0, 1, 0]
+        maze[7][6] = [1, 1, 0, 0]
+        maze[7][7] = [0, 0, 1, 1]
+        maze[7][8] = [1, 0, 1, 0]
+        maze[7][9] = [1, 0, 0, 0]
+
+        maze[8][0] = [1, 0, 1, 0]
+        maze[8][1] = [0, 1, 1, 0]
+        maze[8][2] = [0, 0, 1, 1]
+        maze[8][3] = [1, 1, 0, 0]
+        maze[8][4] = [1, 0, 0, 1]
+        maze[8][5] = [1, 1, 0, 0]
+        maze[8][6] = [0, 0, 1, 1]
+        maze[8][7] = [1, 0, 1, 0]
+        maze[8][8] = [1, 1, 0, 0]
+        maze[8][9] = [0, 0, 1, 1]
+
+        maze[9][0] = [1, 1, 0, 0]
+        maze[9][1] = [1, 0, 0, 1]
+        maze[9][2] = [1, 1, 0, 0]
+        maze[9][3] = [0, 1, 0, 1]
+        maze[9][4] = [0, 1, 0, 1]
+        maze[9][5] = [0, 0, 0, 1]
+        maze[9][6] = [1, 1, 0, 0]
+        maze[9][7] = [1, 0, 0, 1]
+        maze[9][8] = [0, 1, 0, 0]
+        maze[9][9] = [1, 0, 0, 1]
+
 class Player:
         scaling = .5
         x = 0
@@ -11,6 +131,7 @@ class Player:
         direction = 0
         speed = 99
         current = (0,0)
+        maze = Maze.maze
 
         def __init__(self, x, y):
                 self.current = (x,y)
@@ -20,21 +141,30 @@ class Player:
                 self.y *= self.scaling
                 self.speed *= self.scaling
 
+        def tryMove(self):
+                if self.maze[self.current[1]][self.current[0]][self.direction] == 0:
+                        return 0
+                else:
+                        return 1
         def moveRight(self):
-                self.x = self.x + self.speed
-                self.current = (self.current[0] + 1, self.current[1])
+                if self.tryMove():
+                        self.x = self.x + self.speed
+                        self.current = (self.current[0] + 1, self.current[1])
 
         def moveLeft(self):
-                self.x = self.x - self.speed
-                self.current = (self.current[0] - 1, self.current[1])
+                if self.tryMove():
+                        self.x = self.x - self.speed
+                        self.current = (self.current[0] - 1, self.current[1])
 
         def moveUp(self):
-                self.y = self.y - self.speed
-                self.current = (self.current[0], self.current[1]-1)
+                if self.tryMove():
+                        self.y = self.y - self.speed
+                        self.current = (self.current[0], self.current[1]-1)
 
         def moveDown(self):
-                self.y = self.y + self.speed
-                self.current = (self.current[0], self.current[1] + 1)
+                if self.tryMove():
+                        self.y = self.y + self.speed
+                        self.current = (self.current[0], self.current[1] + 1)
 
 
 class GUI:
