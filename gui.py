@@ -277,21 +277,36 @@ class GUI:
 
                         self.on_loop()
                         self.on_render()
-                        if (wait == 1):
-                                time.sleep(.2)
-                        #while(wait == 1):
-                        #        for event in pygame.event.get():
-                        #                if event.type == pygame.KEYUP:
-                        #                        wait = 0
+                        #if (wait == 1):
+                        #        time.sleep(.2)
+                        while(wait == 1):
+                                for event in pygame.event.get():
+                                        if event.type == pygame.KEYUP:
+                                                wait = 0
                 self.on_cleanup()
 
 if __name__ == "__main__" :
         repeat = 1
         while repeat:
-                finishX = random.randint(0,9)
-                finishY = random.randint(0,9)
+                startX = random.randint(0,9)
+                startY = random.randint(0,9)
+                if (startX,startY) == (4,4) or (startX,startY) == (5,4) or (startX,startY) == (4,5) or (startX,startY) == (5,5):
+                        repeat = 1
+                else: repeat = 0
+        repeat = 1
+        while repeat:
+                dist = 5
+                xdist = random.randint(0,5)
+                ydist = 5-xdist
+                finishX = startX+xdist
+                if finishX>9:
+                        finishX = startX-xdist
+                finishY = startY+ydist
+                if finishY>9:
+                        finishY = startY-ydist
                 if (finishX,finishY) == (4,4) or (finishX,finishY) == (5,4) or (finishX,finishY) == (4,5) or (finishX,finishY) == (5,5):
                         repeat = 1
                 else: repeat = 0
-        theApp = GUI(0,0, random.randint(0,9), random.randint(0,9))
+
+        theApp = GUI(startX,startY,finishX,finishY)
         theApp.on_execute()
