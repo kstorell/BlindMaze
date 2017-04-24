@@ -4,6 +4,7 @@ import time
 import random
 
 class Player:
+        scaling = .5
         x = 0
         y = 0
         #N = 0, E = 1, S = 2, W = 3
@@ -15,6 +16,9 @@ class Player:
                 self.current = (x,y)
                 self.x = x*99 + 30
                 self.y = y*99 + 30
+                self.x *= self.scaling
+                self.y *= self.scaling
+                self.speed *= self.scaling
 
         def moveRight(self):
                 self.x = self.x + self.speed
@@ -47,19 +51,28 @@ class GUI:
                 self._bg = None
                 self.player = Player(startX, startY)
                 self.finish = (finishX, finishY)
-                self.finishX = finishX*99 + 20
-                self.finishY = finishY*99 + 20
+                self.finishX = (finishX*99 + 20) * self.player.scaling
+                self.finishY = (finishY*99 + 20) * self.player.scaling
                 self._finish_image = None
 
         def on_init(self):
                 pygame.init()
-                self._display_surf = pygame.display.set_mode((self.windowWidth,self.windowHeight), pygame.HWSURFACE)
+                self._display_surf = pygame.display.set_mode((int(self.windowWidth*self.player.scaling),int(self.windowHeight*self.player.scaling)), pygame.HWSURFACE)
 
                 pygame.display.set_caption('Who turned out the lights!?')
                 self._running = True
+
                 self._finish_image = pygame.image.load("finish.png").convert()
+                w, h = self._finish_image.get_size()
+                self._finish_image = pygame.transform.scale(self._finish_image,(int(w * self.player.scaling), int(h * self.player.scaling)))
+
                 self._bg = pygame.image.load("maze.png").convert()
+                w, h = self._bg.get_size()
+                self._bg = pygame.transform.scale(self._bg,(int(w * self.player.scaling), int(h * self.player.scaling)))
+
                 self._player_image = pygame.image.load("current.png").convert()
+                w, h = self._player_image.get_size()
+                self._player_image = pygame.transform.scale(self._player_image,(int(w * self.player.scaling), int(h * self.player.scaling)))
 
         def on_event(self, event):
                 if event.type == QUIT:
@@ -132,12 +145,12 @@ class GUI:
 
                         self.on_loop()
                         self.on_render()
-                        #if (wait == 1):
-                        #        time.sleep(.3)
-                        while(wait == 1):
-                                for event in pygame.event.get():
-                                        if event.type == pygame.KEYUP:
-                                                wait = 0
+                        if (wait == 1):
+                                time.sleep(.3)
+                        #while(wait == 1):
+                        #        for event in pygame.event.get():
+                        #                if event.type == pygame.KEYUP:
+                        #                        wait = 0
                 self.on_cleanup()
 
 if __name__ == "__main__" :
