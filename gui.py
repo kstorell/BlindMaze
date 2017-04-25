@@ -213,8 +213,11 @@ class GUI:
                 w, h = self._player_image.get_size()
                 self._player_image = pygame.transform.scale(self._player_image,(int(w * self.player.scaling), int(h * self.player.scaling)))
 
-                self.successSound = pygame.mixer.Sound(os.path.join('Sounds', 'cars.wav'))
+
                 pygame.mixer.set_num_channels(16)
+                self.successSound = pygame.mixer.Sound(os.path.join('Sounds', 'success.wav'))
+                self.failSound = pygame.mixer.Sound(os.path.join('Sounds', 'fail.wav'))
+
 
                 self.updateSound()
 
@@ -235,16 +238,57 @@ class GUI:
                 pygame.quit()
 
         def updateSound(self):
-                #TODO
-                return
+                beach = None
+                farm = None
+                cars = None
+                train = None
+                tree = None
+                forward = 'a0.ogg'
+                back = 'a180.ogg'
+                left = 'a-90.ogg'
+                right = 'a90.ogg'
+                x,y = self.player.current
+                direction = self.player.direction
+                if direction == 0:
+                        beach = pygame.mixer.Sound(os.path.join('Sounds', 'beach3D', left))
+                        train = pygame.mixer.Sound(os.path.join('Sounds', 'train3D', back))
+                        #farm = pygame.mixer.Sound(os.path.join('Sounds', 'farm3D', right))
+                        cars = pygame.mixer.Sound(os.path.join('Sounds', 'cars3D', forward))
+                elif direction == 1:
+                        beach = pygame.mixer.Sound(os.path.join('Sounds', 'beach3D', back))
+                        train = pygame.mixer.Sound(os.path.join('Sounds', 'train3D', right))
+                        #farm = pygame.mixer.Sound(os.path.join('Sounds', 'farm3D', forward))
+                        cars = pygame.mixer.Sound(os.path.join('Sounds', 'cars3D', left))
+                elif direction == 2:
+                        beach = pygame.mixer.Sound(os.path.join('Sounds', 'beach3D', right))
+                        train = pygame.mixer.Sound(os.path.join('Sounds', 'train3D', forward))
+                        #farm = pygame.mixer.Sound(os.path.join('Sounds', 'farm3D', left))
+                        cars = pygame.mixer.Sound(os.path.join('Sounds', 'cars3D', back))
+                elif direction == 3:
+                        beach = pygame.mixer.Sound(os.path.join('Sounds', 'beach3D', forward))
+                        train = pygame.mixer.Sound(os.path.join('Sounds', 'train3D', left))
+                        #farm = pygame.mixer.Sound(os.path.join('Sounds', 'farm3D', back))
+                        cars = pygame.mixer.Sound(os.path.join('Sounds', 'cars3D', right))
+
+                beach.play(-1)
+                train.play(-1)
+                #farm.play(-1)
+                cars.play(-1)
+                #tree.play(-1)
 
         def moveSuccess(self):
-                self.successSound.play()
-                return
+                pygame.mixer.stop()
+                channel = self.successSound.play()
+                #while channel.get_busy():
+                #        pass
+                self.updateSound()
 
         def moveFail(self):
-                #TODO
-                return
+                pygame.mixer.stop()
+                channel = self.failSound.play()
+                #while channel.get_busy():
+                #        pass
+                self.updateSound()
 
 
 
@@ -253,6 +297,7 @@ class GUI:
                 if self.player.direction == 4:
                         self.player.direction = 0
                 self._player_image = pygame.transform.rotate(self._player_image, -90)
+                pygame.mixer.stop()
                 self.updateSound()
 
         def turnLeft(self):
@@ -260,6 +305,7 @@ class GUI:
                 if self.player.direction == -1:
                         self.player.direction = 3
                 self._player_image = pygame.transform.rotate(self._player_image, 90)
+                pygame.mixer.stop()
                 self.updateSound()
 
         def on_execute(self):
