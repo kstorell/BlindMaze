@@ -2,6 +2,7 @@ from pygame.locals import *
 import pygame
 import time
 import random
+import os
 
 class Maze:
         maze = dict()
@@ -150,21 +151,28 @@ class Player:
                 if self.tryMove():
                         self.x = self.x + self.speed
                         self.current = (self.current[0] + 1, self.current[1])
+                        return 1
+                return 0
 
         def moveLeft(self):
                 if self.tryMove():
                         self.x = self.x - self.speed
                         self.current = (self.current[0] - 1, self.current[1])
+                        return 1
+                return 0
 
         def moveUp(self):
                 if self.tryMove():
                         self.y = self.y - self.speed
                         self.current = (self.current[0], self.current[1]-1)
-
+                        return 1
+                return 0
         def moveDown(self):
                 if self.tryMove():
                         self.y = self.y + self.speed
                         self.current = (self.current[0], self.current[1] + 1)
+                        return 1
+                return 0
 
 
 class GUI:
@@ -186,6 +194,7 @@ class GUI:
                 self._finish_image = None
 
         def on_init(self):
+                pygame.mixer.pre_init(44100, -16, 2, 2048)
                 pygame.init()
                 self._display_surf = pygame.display.set_mode((int(self.windowWidth*self.player.scaling),int(self.windowHeight*self.player.scaling)), pygame.HWSURFACE)
 
@@ -204,6 +213,11 @@ class GUI:
                 w, h = self._player_image.get_size()
                 self._player_image = pygame.transform.scale(self._player_image,(int(w * self.player.scaling), int(h * self.player.scaling)))
 
+                self.successSound = pygame.mixer.Sound(os.path.join('Sounds', 'cars.wav'))
+                pygame.mixer.set_num_channels(16)
+
+                self.updateSound()
+
         def on_event(self, event):
                 if event.type == QUIT:
                         self.running = False
@@ -220,17 +234,33 @@ class GUI:
         def on_cleanup(self):
                 pygame.quit()
 
+        def updateSound(self):
+                #TODO
+                return
+
+        def moveSuccess(self):
+                self.successSound.play()
+                return
+
+        def moveFail(self):
+                #TODO
+                return
+
+
+
         def turnRight(self):
                 self.player.direction += 1
                 if self.player.direction == 4:
                         self.player.direction = 0
                 self._player_image = pygame.transform.rotate(self._player_image, -90)
+                self.updateSound()
 
         def turnLeft(self):
                 self.player.direction -= 1
                 if self.player.direction == -1:
                         self.player.direction = 3
                 self._player_image = pygame.transform.rotate(self._player_image, 90)
+                self.updateSound()
 
         def on_execute(self):
                 if self.on_init() == False:
@@ -250,15 +280,20 @@ class GUI:
                                 wait = 1
 
                         if (keys[K_UP]):
+                                rtrn = 0
                                 if self.player.direction == 0:
-                                        self.player.moveUp()
+                                        rtrn = self.player.moveUp()
                                 elif self.player.direction == 1:
-                                        self.player.moveRight()
+                                        rtrn = self.player.moveRight()
                                 elif self.player.direction == 2:
-                                        self.player.moveDown()
+                                        rtrn = self.player.moveDown()
                                 elif self.player.direction == 3:
-                                        self.player.moveLeft()
+                                        rtrn = self.player.moveLeft()
                                 wait = 1
+                                if rtrn:
+                                        self.moveSuccess()
+                                else:
+                                        self.moveFail()
 
                         if (keys[K_DOWN]):
                                 #TODO Victory, not victory!

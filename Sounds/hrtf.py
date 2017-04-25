@@ -33,11 +33,6 @@ if len(sys.argv) < 3:
 
 fname = sys.argv[1]
 dname = sys.argv[2]
-print fname
-print dname
-#fname = "cars.wav"
-#dname = "cars3D"
-
 if not os.path.exists(dname):
     os.mkdir(dname)
 
