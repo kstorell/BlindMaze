@@ -262,10 +262,10 @@ class GUI:
                 self.trainf = pygame.mixer.Sound(os.path.join('Sounds', 'train3D', forward))
                 self.trainr = pygame.mixer.Sound(os.path.join('Sounds', 'train3D', right))
 
-                #self.farmr = pygame.mixer.Sound(os.path.join('Sounds', 'farm3D', right))
-                # self.farmb = pygame.mixer.Sound(os.path.join('Sounds', 'farm3D', back))
-                # self.farmf = pygame.mixer.Sound(os.path.join('Sounds', 'farm3D', forward))
-                # self.farml = pygame.mixer.Sound(os.path.join('Sounds', 'farm3D', left))
+                self.farmr = pygame.mixer.Sound(os.path.join('Sounds', 'farm3D', right))
+                self.farmb = pygame.mixer.Sound(os.path.join('Sounds', 'farm3D', back))
+                self.farmf = pygame.mixer.Sound(os.path.join('Sounds', 'farm3D', forward))
+                self.farml = pygame.mixer.Sound(os.path.join('Sounds', 'farm3D', left))
 
                 self.carsf = pygame.mixer.Sound(os.path.join('Sounds', 'cars3D', forward))
                 self.carsb = pygame.mixer.Sound(os.path.join('Sounds', 'cars3D', back))
@@ -310,22 +310,22 @@ class GUI:
                 if direction == 0:
                         beach = self.beachl
                         train = self.trainb
-                        #farm = self.farmr
+                        farm = self.farmr
                         cars = self.carsf
                 elif direction == 1:
                         beach = self.beachb
                         train = self.trainr
-                        #farm = self.farmf
+                        farm = self.farmf
                         cars = self.carsl
                 elif direction == 2:
                         beach = self.beachr
                         train = self.trainf
-                        #farm = self.farml
+                        farm = self.farml
                         cars = self.carsb
                 elif direction == 3:
                         beach = self.beachf
                         train = self.trainl
-                        #farm = self.farmb
+                        farm = self.farmb
                         cars = self.carsr
 #left and right sections
                 if y == 4 or y == 5:
@@ -478,14 +478,14 @@ class GUI:
                 else:
                         cars = None
 
-                #if x == 9:
-                #        farm.set_volume(1)
-                #elif x == 8:
-                #        farm.set_volume(.3)
-                #elif x == 7:
-                #        farm.set_volume(.1)
-                #else:
-                #        farm = None
+                if x == 9:
+                        farm.set_volume(1)
+                elif x == 8:
+                        farm.set_volume(.3)
+                elif x == 7:
+                        farm.set_volume(.1)
+                else:
+                        farm = None
 
                 if y == 9:
                         train.set_volume(1)
