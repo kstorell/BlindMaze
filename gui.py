@@ -192,6 +192,34 @@ class GUI:
                 self.finishX = (finishX*99 + 20) * self.player.scaling
                 self.finishY = (finishY*99 + 20) * self.player.scaling
                 self._finish_image = None
+                self.beachb = None
+                self.beachf = None
+                self.beachl = None
+                self.beachr = None
+
+                self.trainb = None
+                self.trainl = None
+                self.trainf = None
+                self.trainr = None
+
+                self.farmr = None
+                self.farmb = None
+                self.farmf = None
+                self.farml = None
+
+                self.carsf = None
+                self.carsb = None
+                self.carsl = None
+                self.carsr = None
+
+                self.treef = None
+                self.treeb = None
+                self.treel = None
+                self.treer = None
+                self.treefr = None
+                self.treefl = None
+                self.treebr = None
+                self.treebl = None
 
         def on_init(self):
                 pygame.mixer.pre_init(44100, -16, 2, 2048)
@@ -214,10 +242,44 @@ class GUI:
                 self._player_image = pygame.transform.scale(self._player_image,(int(w * self.player.scaling), int(h * self.player.scaling)))
 
 
-                pygame.mixer.set_num_channels(16)
+                pygame.mixer.set_num_channels(60)
+
+                forward = 'a0.ogg'
+                back = 'a180.ogg'
+                left = 'a-90.ogg'
+                right = 'a90.ogg'
+
                 self.successSound = pygame.mixer.Sound(os.path.join('Sounds', 'success.wav'))
                 self.failSound = pygame.mixer.Sound(os.path.join('Sounds', 'fail.wav'))
 
+                self.beachl = pygame.mixer.Sound(os.path.join('Sounds', 'beach3D', left))
+                self.beachr = pygame.mixer.Sound(os.path.join('Sounds', 'beach3D', right))
+                self.beachf = pygame.mixer.Sound(os.path.join('Sounds', 'beach3D', forward))
+                self.beachb = pygame.mixer.Sound(os.path.join('Sounds', 'beach3D', back))
+
+                self.trainb = pygame.mixer.Sound(os.path.join('Sounds', 'train3D', back))
+                self.trainl = pygame.mixer.Sound(os.path.join('Sounds', 'train3D', left))
+                self.trainf = pygame.mixer.Sound(os.path.join('Sounds', 'train3D', forward))
+                self.trainr = pygame.mixer.Sound(os.path.join('Sounds', 'train3D', right))
+
+                #self.farmr = pygame.mixer.Sound(os.path.join('Sounds', 'farm3D', right))
+                # self.farmb = pygame.mixer.Sound(os.path.join('Sounds', 'farm3D', back))
+                # self.farmf = pygame.mixer.Sound(os.path.join('Sounds', 'farm3D', forward))
+                # self.farml = pygame.mixer.Sound(os.path.join('Sounds', 'farm3D', left))
+
+                self.carsf = pygame.mixer.Sound(os.path.join('Sounds', 'cars3D', forward))
+                self.carsb = pygame.mixer.Sound(os.path.join('Sounds', 'cars3D', back))
+                self.carsl = pygame.mixer.Sound(os.path.join('Sounds', 'cars3D', left))
+                self.carsr = pygame.mixer.Sound(os.path.join('Sounds', 'cars3D', right))
+
+                self.treef = pygame.mixer.Sound(os.path.join('Sounds', 'tree3D', forward))
+                self.treeb = pygame.mixer.Sound(os.path.join('Sounds', 'tree3D', back))
+                self.treel = pygame.mixer.Sound(os.path.join('Sounds', 'tree3D', left))
+                self.treer = pygame.mixer.Sound(os.path.join('Sounds', 'tree3D', right))
+                self.treefr = pygame.mixer.Sound(os.path.join('Sounds', 'tree3D', 'a45.ogg'))
+                self.treefl = pygame.mixer.Sound(os.path.join('Sounds', 'tree3D', 'a-45.ogg'))
+                self.treebr = pygame.mixer.Sound(os.path.join('Sounds', 'tree3D', 'a135.ogg'))
+                self.treebl = pygame.mixer.Sound(os.path.join('Sounds', 'tree3D', 'a-135.ogg'))
 
                 self.updateSound()
 
@@ -243,38 +305,207 @@ class GUI:
                 cars = None
                 train = None
                 tree = None
-                forward = 'a0.ogg'
-                back = 'a180.ogg'
-                left = 'a-90.ogg'
-                right = 'a90.ogg'
                 x,y = self.player.current
                 direction = self.player.direction
                 if direction == 0:
-                        beach = pygame.mixer.Sound(os.path.join('Sounds', 'beach3D', left))
-                        train = pygame.mixer.Sound(os.path.join('Sounds', 'train3D', back))
-                        #farm = pygame.mixer.Sound(os.path.join('Sounds', 'farm3D', right))
-                        cars = pygame.mixer.Sound(os.path.join('Sounds', 'cars3D', forward))
+                        beach = self.beachl
+                        train = self.trainb
+                        #farm = self.farmr
+                        cars = self.carsf
                 elif direction == 1:
-                        beach = pygame.mixer.Sound(os.path.join('Sounds', 'beach3D', back))
-                        train = pygame.mixer.Sound(os.path.join('Sounds', 'train3D', right))
-                        #farm = pygame.mixer.Sound(os.path.join('Sounds', 'farm3D', forward))
-                        cars = pygame.mixer.Sound(os.path.join('Sounds', 'cars3D', left))
+                        beach = self.beachb
+                        train = self.trainr
+                        #farm = self.farmf
+                        cars = self.carsl
                 elif direction == 2:
-                        beach = pygame.mixer.Sound(os.path.join('Sounds', 'beach3D', right))
-                        train = pygame.mixer.Sound(os.path.join('Sounds', 'train3D', forward))
-                        #farm = pygame.mixer.Sound(os.path.join('Sounds', 'farm3D', left))
-                        cars = pygame.mixer.Sound(os.path.join('Sounds', 'cars3D', back))
+                        beach = self.beachr
+                        train = self.trainf
+                        #farm = self.farml
+                        cars = self.carsb
                 elif direction == 3:
-                        beach = pygame.mixer.Sound(os.path.join('Sounds', 'beach3D', forward))
-                        train = pygame.mixer.Sound(os.path.join('Sounds', 'train3D', left))
-                        #farm = pygame.mixer.Sound(os.path.join('Sounds', 'farm3D', back))
-                        cars = pygame.mixer.Sound(os.path.join('Sounds', 'cars3D', right))
+                        beach = self.beachf
+                        train = self.trainl
+                        #farm = self.farmb
+                        cars = self.carsr
+#left and right sections
+                if y == 4 or y == 5:
+                        if x < 5:
+                                if direction == 0:
+                                        tree = self.treer
+                                elif direction == 1:
+                                        tree = self.treef
+                                elif direction == 2:
+                                        tree = self.treel
+                                elif direction == 3:
+                                        tree = self.treeb
+                        else:
+                                if direction == 0:
+                                        tree = self.treel
+                                elif direction == 1:
+                                        tree = self.treeb
+                                elif direction == 2:
+                                        tree = self.treer
+                                elif direction == 3:
+                                        tree = self.treef
 
-                beach.play(-1)
-                train.play(-1)
-                #farm.play(-1)
-                cars.play(-1)
-                #tree.play(-1)
+                        if x == 3 or x == 6:
+                                tree.set_volume(1)
+                        elif x == 2 or x == 7:
+                                tree.set_volume(.3)
+                        elif x == 1 or x == 8:
+                                tree.set_volume(.1)
+                        else:
+                                tree.set_volume(0)
+#top and bottom sections
+                if x == 4 or x == 5:
+                        if y < 5:
+                                if direction == 0:
+                                        tree = self.treeb
+                                elif direction == 1:
+                                        tree = self.treer
+                                elif direction == 2:
+                                        tree = self.treef
+                                elif direction == 3:
+                                        tree = self.treel
+                        else:
+                                if direction == 0:
+                                        tree = self.treef
+                                elif direction == 1:
+                                        tree = self.treel
+                                elif direction == 2:
+                                        tree = self.treeb
+                                elif direction == 3:
+                                        tree = self.treer
+
+                        if y == 3 or y == 6:
+                                tree.set_volume(1)
+                        elif y == 2 or y == 7:
+                                tree.set_volume(.3)
+                        elif y == 1 or y == 8:
+                                tree.set_volume(.1)
+                        else:
+                                tree.set_volume(0)
+#diagonal top left
+                if (x ==2 and (y==2 or y==3)) or (x == 3 and (y == 2 or y == 3)):
+                        if direction == 0:
+                                tree = self.treebr
+                        elif direction == 1:
+                                tree = self.treefr
+                        elif direction == 2:
+                                tree = self.treefl
+                        elif direction == 3:
+                                tree = self.treebl
+
+                        if x == 3 and y == 3:
+                                tree.set_volume(.8)
+                        elif x == 2 and y == 2:
+                                tree.set_volume(.05)
+                        else:
+                                tree.set_volume(.1)
+
+#diagonal bottom left
+                if (x == 2 and (y == 6 or y == 7)) or (x == 3 and (y == 6 or y == 7)):
+                        if direction == 0:
+                                tree = self.treefr
+                        elif direction == 1:
+                                tree = self.treefl
+                        elif direction == 2:
+                                tree = self.treebl
+                        elif direction == 3:
+                                tree = self.treebr
+
+                        if x == 3 and y == 6:
+                                tree.set_volume(.8)
+                        elif x == 2 and y == 7:
+                                tree.set_volume(.05)
+                        else:
+                                tree.set_volume(.1)
+
+
+
+# diagonal bottom right
+                if (x == 6 and (y == 6 or y == 7)) or (x == 7 and (y == 6 or y == 7)):
+                        if direction == 0:
+                                tree = self.treefl
+                        elif direction == 1:
+                                tree = self.treebl
+                        elif direction == 2:
+                                tree = self.treebr
+                        elif direction == 3:
+                                tree = self.treefr
+
+                        if x == 6 and y == 6:
+                                tree.set_volume(.8)
+                        elif x == 7 and y == 7:
+                                tree.set_volume(.05)
+                        else:
+                                tree.set_volume(.1)
+
+
+# diagonal top right
+                if (x == 6 and (y == 2 or y == 3)) or (x == 7 and (y == 2 or y == 3)):
+                        if direction == 0:
+                                tree = self.treebl
+                        elif direction == 1:
+                                tree = self.treebr
+                        elif direction == 2:
+                                tree = self.treefr
+                        elif direction == 3:
+                                tree = self.treefl
+
+                        if x == 6 and y == 3:
+                                tree.set_volume(.8)
+                        elif x == 7 and y == 2:
+                                tree.set_volume(.05)
+                        else:
+                                tree.set_volume(.1)
+
+                if x == 0:
+                        beach.set_volume(1)
+                elif x == 1:
+                        beach.set_volume(.3)
+                elif x == 2:
+                        beach.set_volume(.1)
+                else:
+                        beach = None
+
+                if y == 0:
+                        cars.set_volume(1)
+                elif y == 1:
+                        cars.set_volume(.3)
+                elif y == 2:
+                        cars.set_volume(.1)
+                else:
+                        cars = None
+
+                #if x == 9:
+                #        farm.set_volume(1)
+                #elif x == 8:
+                #        farm.set_volume(.3)
+                #elif x == 7:
+                #        farm.set_volume(.1)
+                #else:
+                #        farm = None
+
+                if y == 9:
+                        train.set_volume(1)
+                elif y == 8:
+                        train.set_volume(.3)
+                elif y == 7:
+                        train.set_volume(.1)
+                else:
+                        train = None
+
+                if beach != None:
+                        beach.play(-1)
+                if train != None:
+                        train.play(-1)
+                if farm != None:
+                        farm.play(-1)
+                if cars != None:
+                        cars.play(-1)
+                if tree != None:
+                        tree.play(-1)
 
         def moveSuccess(self):
                 pygame.mixer.stop()
