@@ -587,6 +587,34 @@ class GUI:
                         if (keys[K_ESCAPE]):
                                 self._running = False
 
+                        if (keys[K_n]):
+                                repeat = 1
+                                while repeat:
+                                        startX = random.randint(0,9)
+                                        startY = random.randint(0,9)
+                                        if (startX,startY) == (4,4) or (startX,startY) == (5,4) or (startX,startY) == (4,5) or (startX,startY) == (5,5):
+                                                repeat = 1
+                                        else: repeat = 0
+                                repeat = 1
+                                while repeat:
+                                        dist = 5
+                                        xdist = random.randint(0,5)
+                                        ydist = 5-xdist
+                                        finishX = startX+xdist
+                                        if finishX>9:
+                                                finishX = startX-xdist
+                                        finishY = startY+ydist
+                                        if finishY>9:
+                                                finishY = startY-ydist
+                                        if (finishX,finishY) == (4,4) or (finishX,finishY) == (5,4) or (finishX,finishY) == (4,5) or (finishX,finishY) == (5,5):
+                                                repeat = 1
+                                        else: repeat = 0
+                                self.player = Player(startX, startY)
+                                self.finish = (finishX, finishY)
+                                self.finishX = (finishX*99 + 20) * self.player.scaling
+                                self.finishY = (finishY*99 + 20) * self.player.scaling
+                                pygame.mixer.stop()
+                                self.updateSound()
                         self.on_loop()
                         self.on_render()
                         #if (wait == 1):
