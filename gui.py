@@ -251,6 +251,8 @@ class GUI:
 
                 self.successSound = pygame.mixer.Sound(os.path.join('Sounds', 'success.wav'))
                 self.failSound = pygame.mixer.Sound(os.path.join('Sounds', 'fail.wav'))
+                self.fanfare = pygame.mixer.Sound(os.path.join('Sounds', 'fanfare.wav'))
+                self.applause = pygame.mixer.Sound(os.path.join('Sounds', 'applause.wav'))
 
                 self.beachl = pygame.mixer.Sound(os.path.join('Sounds', 'beach3D', left))
                 self.beachr = pygame.mixer.Sound(os.path.join('Sounds', 'beach3D', right))
@@ -511,7 +513,7 @@ class GUI:
                 pygame.mixer.stop()
                 channel = self.successSound.play()
                 #while channel.get_busy():
-                #        pass
+                 #       pass
                 self.updateSound()
 
         def moveFail(self):
@@ -616,7 +618,12 @@ class GUI:
                                 if self.player.current == self.finish:
                                         #TODO victory
                                         print "YOU WIN!"
-                                        self._running = False
+                                        pygame.mixer.stop()
+                                        self.fanfare.play()
+                                        channel = self.applause.play()
+                                        while channel.get_busy():
+                                                pass
+                                        self.new_game()
                                 wait = 1
                         if (keys[K_ESCAPE]):
                                 self._running = False
